@@ -1,0 +1,29 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": false,
+    "outDir": "./dist",
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./", /* Base directory to resolve non-absolute module names. */
+    "paths": {
+      "src/*": [
+        "src/*"
+      ]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "esModuleInterop": true
+  },
+  "lib": [
+    "es2015"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.js"
+  ]
+}
