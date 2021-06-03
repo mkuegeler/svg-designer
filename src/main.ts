@@ -3,17 +3,17 @@ import { Request, Response } from 'express';
 
 // import { AbstractPoint, AbstractLine, AbstractRectangle, PointDefault } from './abstract';
 import { markupElement } from './markup';
-import { HtmlDocument, pageDefault, tag } from './html-generator';
+import { MarkupDocument, pageDefault, tag } from './markup-generator';
 
 // Get general configuration settings
-import config from './config.json'
+// import config from './config.json'
 // import svg from './svg.json';
 
 
 // const header = new Header("h4",config.info.Description).el;
 // const html = new Html("html", config.html, "Test").el;
 
-const htmlDocument = new HtmlDocument().el;
+const htmlDocument = new MarkupDocument().el;
 
 const app = express();
 

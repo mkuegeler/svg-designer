@@ -1,0 +1,33 @@
+{
+    "document": {
+        "name": "html",
+        "doctype": true,
+        "attributes": {
+            "lang": "en"
+        },
+        "children": [
+            {
+                "name": "head",
+                "attributes": {
+                    "name": "meta"
+                },
+                "children": [
+                    {
+                        "name": "title",
+                        "text": "This is a sample page"
+                    }
+                ]
+            },
+            {
+                "name": "body",
+                "attributes": {},
+                "children": [
+                    {
+                        "name": "h4",
+                        "text": "This is a sample page"
+                    }
+                ]
+            }
+        ]
+    }
+}
