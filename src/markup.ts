@@ -17,12 +17,12 @@ let TestEl6 = new Element("svg", { "id": "new svg", "style": "#ffff00" }, "", tr
 
 */
 
-export interface element {
+export interface markup_element {
     name: string,
     attributes: object
 }
 
-export class Element implements element {
+export class markupElement implements markup_element {
     public name: string;
     public attributes: object;
     public el: string;
