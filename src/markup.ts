@@ -22,7 +22,7 @@ export interface markup_element {
     attributes: object
 }
 
-export class markupElement implements markup_element {
+export class MarkupElement implements markup_element {
     public name: string;
     public attributes: object;
     public el: string;

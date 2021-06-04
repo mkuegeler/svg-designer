@@ -2,18 +2,10 @@ import express from 'express';
 import { Request, Response } from 'express';
 
 // import { AbstractPoint, AbstractLine, AbstractRectangle, PointDefault } from './abstract';
-import { markupElement } from './markup';
-import { MarkupDocument, pageDefault, tag } from './markup-generator';
+import { MarkupElement } from './markup';
+import { MarkupDocument, child, defaultDoc } from './markup-generator';
 
-// Get general configuration settings
-// import config from './config.json'
-// import svg from './svg.json';
-
-
-// const header = new Header("h4",config.info.Description).el;
-// const html = new Html("html", config.html, "Test").el;
-
-const htmlDocument = new MarkupDocument().el;
+const doc = new MarkupDocument().el;
 
 const app = express();
 
@@ -22,7 +14,7 @@ const {
 } = process.env;
 
 app.get('/', (req: Request, res: Response) => {
-    res.send(htmlDocument);
+    res.send(doc);
 });
 
 // // create application/json parser
@@ -49,10 +41,10 @@ app.listen(PORT, () => {
 });
 
 // Test functions
-function test_tagDefault(children:tag[]=pageDefault) {
+function test_tagDefault(children:child[]=defaultDoc.children) {
     let content: string = "";
     children.forEach(child => {
-        content += new markupElement(child.name, {}).el;
+        content += new MarkupElement(child.name, {}).el;
     });
     return content;
 }
