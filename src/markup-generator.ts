@@ -1,12 +1,12 @@
 import { MarkupElement } from './markup';
-import tpl from './html-template.json'
+import tpl from './doc-html.json'
 
 
 export interface child {
     name: string,
     attributes?: object,
     children?: child[],
-    text?: string
+    text?: string | string[]
 }
 
 export interface markup_document {
@@ -36,7 +36,7 @@ export class MarkupDocument implements markup_document {
         this.doctype = doctype;
         this.attributes = attributes;
         this.children = children;
-        let content: string = this.get_children(children);
+        let content: string = this.get_children(this.children);
 
         let doc = new MarkupElement(name, attributes, content).el;
         doctype === true ? this.el = `<!doctype ${name}>${doc}` : this.el = `${doc}`;
@@ -46,11 +46,17 @@ export class MarkupDocument implements markup_document {
         let content: string = "";
         let txt: string = "";
         children.forEach(child => {
-            child.text ? txt = child.text : txt;
-            child.children ? content += new MarkupElement(child.name, child.attributes ? child.attributes: {}, this.get_children(child.children)).el :
-                content += new MarkupElement(child.name, child.attributes, txt).el;
+
+            child.children ? content += new MarkupElement(child.name,
+                child.attributes ? child.attributes : {}, this.get_children(child.children)).el :
+                content += new MarkupElement(child.name, child.attributes,
+                    child.text ? txt = Array.isArray(child.text) ? txt = child.text.join(' ') :
+                        txt = child.text : txt, true).el;
+            if (Boolean(txt) == true) { txt = "" };
+
         });
         return content;
     }
+
 }
 

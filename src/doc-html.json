@@ -39,11 +39,14 @@
                     },
                     {
                         "name": "style",
-                        "text": "body {background-color: brown;} .jumbotron { background-color:burlywood }"
+                        "text": [
+                            "body {background-color: brown;}",
+                            ".jumbotron {  background-color:burlywood }"
+                        ]
                     },
                     {
                         "name": "title",
-                        "text": "This is a sample page"
+                        "text": "This is the title of the page"
                     }
                 ]
             },
@@ -51,8 +54,19 @@
                 "name": "body",
                 "children": [
                     {
-                        "name": "h1",
-                        "text": "This is a sample page"
+                        "name": "div",
+                        "attributes": {
+                            "class": "jumbotron"
+                        },
+                        "children": [
+                            {
+                                "name": "h1",
+                                "attributes": {
+                                    "class": "display-3"
+                                },
+                                "text": "SVG Designer"
+                            }
+                        ]
                     },
                     {
                         "name": "script",
