@@ -40,8 +40,8 @@
                     {
                         "name": "style",
                         "text": [
-                            "body {background-color: brown;}",
-                            ".jumbotron {  background-color:burlywood }"
+                            "body {background-color: #ff66ff;}",
+                            ".jumbotron {  background-color:#ccff00 }"
                         ]
                     },
                     {
@@ -64,7 +64,7 @@
                                 "attributes": {
                                     "class": "display-3"
                                 },
-                                "text": "SVG Designer"
+                                "text": "html template 2"
                             }
                         ]
                     },

@@ -1,6 +1,8 @@
 import { MarkupElement } from './markup';
-import tpl from './doc-html.json'
+import { template_lib } from './templates/lib';
+import config from './config.json';
 
+const tpl = template_lib[config.default].doc;
 
 export interface child {
     name: string,
@@ -58,5 +60,26 @@ export class MarkupDocument implements markup_document {
         return content;
     }
 
+}
+
+export class createDocument {
+    public id: number;
+    public el: string;
+    constructor(id: number = 0) {
+
+        this.id = id;
+
+        let tpl = template_lib[this.id].doc;
+
+        let params: markup_document = {
+            name: tpl.document.name,
+            doctype: tpl.document.doctype,
+            attributes: tpl.document.attributes,
+            children: tpl.document.children
+        }
+
+        this.el = new MarkupDocument(params.name, params.doctype,
+            params.attributes, params.children).el;
+    }
 }
 
