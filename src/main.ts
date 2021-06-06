@@ -40,7 +40,12 @@ app.get('/fragment/:id', (req: Request, res: Response) => {
     let tpl = template_lib[id].doc;
     let frg = check_array(Number(req.params.id), fragment_lib).doc.document;
     let children:any = [...template_lib[id].doc.document.children];
+    // let body:any = [...template_lib[id].doc.document.children[1].children];
+    // body.unshift(frg);
+    //children[1].children = [...body];
+    // children.unshift(frg);
     children.unshift(frg);
+
 
     let p: markup_document = {
         name: tpl.document.name,
@@ -48,6 +53,8 @@ app.get('/fragment/:id', (req: Request, res: Response) => {
         children: children,
         doctype: tpl.document.doctype
     }
+
+    // children = [];
 
     res.send(new createDocument(p).el);
     
