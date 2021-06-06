@@ -13,35 +13,35 @@ export interface child {
 
 export interface markup_document {
     name: string;
-    doctype: boolean;
     attributes: object;
-    children: child[]
+    children: child[];
+    doctype?: boolean;
 }
 
 export const defaultDoc: markup_document = {
     name: tpl.document.name,
-    doctype: tpl.document.doctype,
     attributes: tpl.document.attributes,
-    children: tpl.document.children
+    children: tpl.document.children,
+    doctype: tpl.document.doctype,
 }
 
 export class MarkupDocument implements markup_document {
     public name: string;
-    public doctype: boolean;
     public attributes: object;
-    public children: child[]
+    public children: child[];
+    public doctype?: boolean;
     public el: string;
     constructor(name: string = defaultDoc.name,
-        doctype: boolean = defaultDoc.doctype, attributes: object = defaultDoc.attributes,
-        children: child[] = defaultDoc.children) {
+        attributes: object = defaultDoc.attributes,
+        children: child[] = defaultDoc.children, doctype?: boolean) {
         this.name = name;
-        this.doctype = doctype;
+        doctype ? this.doctype = true : this.doctype = false;
         this.attributes = attributes;
         this.children = children;
         let content: string = this.get_children(this.children);
 
         let doc = new MarkupElement(name, attributes, content).el;
-        doctype === true ? this.el = `<!doctype ${name}>${doc}` : this.el = `${doc}`;
+        this.doctype === true ? this.el = `<!doctype ${name}>${doc}` : this.el = `${doc}`;
 
     }
     private get_children(children: child[]) {
@@ -68,18 +68,20 @@ export class viewDocument {
     constructor(id: number = 0) {
 
         this.id = id;
-        let tpl:any;
-        this.id > template_lib.length || this.id < 0 ? tpl = template_lib[0].doc : tpl = template_lib[this.id].doc;   
+        let tpl: any;
+        this.id >= template_lib.length || this.id < 0 ? tpl = template_lib[0].doc : tpl = template_lib[this.id].doc;
+
+        let doctype:boolean = tpl.document.doctype? tpl.document.doctype : false;
 
         let params: markup_document = {
             name: tpl.document.name,
-            doctype: tpl.document.doctype,
             attributes: tpl.document.attributes,
-            children: tpl.document.children
+            children: tpl.document.children,
+            doctype: doctype
         }
 
-        this.el = new MarkupDocument(params.name, params.doctype,
-            params.attributes, params.children).el;
+        this.el = new MarkupDocument(params.name,
+            params.attributes, params.children, params.doctype).el;
     }
 }
 
@@ -88,8 +90,9 @@ export class createDocument {
     public el: string;
     constructor(p: markup_document = defaultDoc) {
         this.p = p;
-        this.el = new MarkupDocument(this.p.name, this.p.doctype,
-            this.p.attributes, this.p.children).el;
+        let doctype:boolean = this.p.doctype? this.p.doctype : false;
+        this.el = new MarkupDocument(this.p.name,
+            this.p.attributes, this.p.children, doctype).el;
     }
 }
 

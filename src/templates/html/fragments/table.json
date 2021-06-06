@@ -1,0 +1,15 @@
+{
+    "document": {
+        "name": "table",
+        "attributes": {
+            "class": "table table-dark table-striped"
+        },
+        "children": [
+            {"name":"thead",
+                "children": [
+                    {"name":"th"}
+                ]
+            }
+        ]
+    }
+}
