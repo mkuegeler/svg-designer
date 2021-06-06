@@ -1,27 +1,8 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import config from './config.json';
-
-// import { AbstractPoint, AbstractLine, AbstractRectangle, PointDefault } from './abstract';
-// import { MarkupElement } from './markup';
-import { createDocument } from './markup-generator';
-
-
-// import { template_lib } from './templates/lib';
-
-// Default html template
-// let id: number = config.default;
-
-// let tpl = template_lib[id].doc;
-
-// const customDoc: markup_document = {
-//     name: tpl.document.name,
-//     doctype: tpl.document.doctype,
-//     attributes: tpl.document.attributes,
-//     children: tpl.document.children
-// }
-
-const doc = new createDocument().el;
+import { markup_document, viewDocument, createDocument } from './markup-generator';
+import { template_lib } from './templates/lib';
 
 const app = express();
 
@@ -30,11 +11,25 @@ const {
 } = process.env;
 
 app.get('/', (req: Request, res: Response) => {
-    res.send(doc);
+    res.send(new viewDocument().el);
 });
 
 app.get('/:id', (req: Request, res: Response) => {
-    res.send(new createDocument(Number(req.params.id)).el);
+    res.send(new viewDocument(Number(req.params.id)).el);
+});
+
+app.get('/:id/:title', (req: Request, res: Response) => {
+    let tpl = template_lib[Number(req.params.id)].doc;
+    tpl.document.children[1].children[0].children[0].text = req.params.title;
+
+    let p: markup_document = {
+        name: tpl.document.name,
+        doctype: tpl.document.doctype,
+        attributes: tpl.document.attributes,
+        children: tpl.document.children
+    }
+    res.send(new createDocument(p).el);
+
 });
 
 // // create application/json parser
@@ -56,16 +51,7 @@ app.post('/api/:id', jsonParser, function (req, res) {
 })
 
 app.listen(PORT, () => {
-    console.log('server started at http://localhost:' + PORT);
-    // console.log("Tests:\n");
-    // console.log(test_tagDefault());
+    console.log(`Server started at ${config.host}:${config.port}`);
 });
 
-// Test functions
-// function test_tagDefault(children: child[] = customDoc.children) {
-//     let content: string = "";
-//     children.forEach(child => {
-//         content += new MarkupElement(child.name, {}).el;
-//     });
-//     return content;
-// }
+

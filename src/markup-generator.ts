@@ -62,14 +62,14 @@ export class MarkupDocument implements markup_document {
 
 }
 
-export class createDocument {
+export class viewDocument {
     public id: number;
     public el: string;
     constructor(id: number = 0) {
 
         this.id = id;
-
-        let tpl = template_lib[this.id].doc;
+        let tpl:any;
+        this.id > template_lib.length || this.id < 0 ? tpl = template_lib[0].doc : tpl = template_lib[this.id].doc;   
 
         let params: markup_document = {
             name: tpl.document.name,
@@ -80,6 +80,16 @@ export class createDocument {
 
         this.el = new MarkupDocument(params.name, params.doctype,
             params.attributes, params.children).el;
+    }
+}
+
+export class createDocument {
+    public p: markup_document;
+    public el: string;
+    constructor(p: markup_document = defaultDoc) {
+        this.p = p;
+        this.el = new MarkupDocument(this.p.name, this.p.doctype,
+            this.p.attributes, this.p.children).el;
     }
 }
 
