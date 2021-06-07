@@ -4,7 +4,7 @@ import config from './config.json';
 import { markup_document, viewDocument, createDocument } from './markup-generator';
 import { template_lib } from './templates/lib';
 import { fragment_lib } from './templates/lib';
-import { check_array } from './utils';
+import { check_array, add_element } from './utils';
 
 const app = express();
 
@@ -35,17 +35,16 @@ app.get('/template/:id', (req: Request, res: Response) => {
 
 // });
 
-app.get('/fragment/:id', (req: Request, res: Response) => {
-    let id:number = 3;
-    let tpl = template_lib[id].doc;
-    let frg = check_array(Number(req.params.id), fragment_lib).doc.document;
-    let children:any = [...template_lib[id].doc.document.children];
-    // let body:any = [...template_lib[id].doc.document.children[1].children];
-    // body.unshift(frg);
-    //children[1].children = [...body];
-    // children.unshift(frg);
-    children.unshift(frg);
+app.get('/fragment/:pageid/:fragmentid', (req: Request, res: Response) => {
+    let pageid:number = Number(req.params.pageid);
+    let fragmentid:number = Number(req.params.fragmentid);
+    
+    let tpl = template_lib[pageid].doc;
+    let frg = check_array(Number(fragmentid), fragment_lib).doc.document;
+    let children:any = [...template_lib[pageid].doc.document.children];
 
+    children[1].children = [];
+    children[1].children = Object.assign([],add_element(children[1].children,frg,true));
 
     let p: markup_document = {
         name: tpl.document.name,
@@ -54,11 +53,7 @@ app.get('/fragment/:id', (req: Request, res: Response) => {
         doctype: tpl.document.doctype
     }
 
-    // children = [];
-
     res.send(new createDocument(p).el);
-    
-    
 
 });
 
