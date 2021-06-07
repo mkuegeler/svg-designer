@@ -5,6 +5,7 @@ import html3 from './html/3.json';
 
 // Fragments
 import htmlheader from './html/fragments/header.json';
+import scripts from './html/fragments/scripts.json';
 
 export interface templates {
     name: string,
@@ -20,5 +21,6 @@ export const template_lib: templates[] = [
 ]
 
 export const fragment_lib: templates[] = [
-    { name: "htmlfragment1", type: "html", doc: htmlheader }
+    { name: "htmlfragment1", type: "html", doc: htmlheader },
+    { name: "scripts", type: "html", doc: scripts }
 ]

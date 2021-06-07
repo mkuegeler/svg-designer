@@ -2,6 +2,7 @@
     "document": {
         "name": "html",
         "doctype": true,
+        "insert": 1,
         "attributes": {
             "lang": "en"
         },

@@ -1,16 +1,55 @@
 {
     "document": {
-        "name": "div",
-        "attributes": {
-            "class": "jumbotron"
-        },
+        "name": "header",
+        "attributes": {"parent": "body"},
         "children": [
             {
-                "name": "h1",
+                "name": "div",
                 "attributes": {
-                    "class": "display-3"
+                    "class": "jumbotron"
                 },
-                "text": "Header Title"
+                "children": [
+                    {
+                        "name": "h1",
+                        "attributes": {
+                            "class": "display-3"
+                        },
+                        "text": "Header Title"
+                    },
+                    {
+                        "name": "p",
+                        "attributes": {
+                            "class": "lead"
+                        },
+                        "text": "Sub Title"
+                    },
+                    {
+                        "name": "hr",
+                        "attributes": {
+                            "class": "my-2"
+                        }
+                    },
+                    {
+                        "name": "p",
+                        "attributes": {
+                            "class": "lead"
+                        },
+                        "children": [
+                            {
+                                "name": "div",
+                                "attributes": {
+                                    "id": "main"
+                                },
+                                "children": [
+                                    {
+                                        "name": "h4",
+                                        "text": "Main Title"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }
