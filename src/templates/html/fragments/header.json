@@ -1,7 +1,7 @@
 {
     "document": {
         "name": "header",
-        "attributes": {"parent": "body"},
+        "parent": "body",
         "children": [
             {
                 "name": "div",

@@ -51,7 +51,7 @@ app.get('/template/:pageid/:fragmentid', (req: Request, res: Response) => {
 
     tpl.children.forEach((element: any) => {
         if (element.name === frg.attributes.parent) {
-            element.children = [...hde.children,...frg.children];
+            element.children = [...hde.children, ...frg.children];
         }
     });
 
@@ -111,21 +111,89 @@ const jsonParser = express.json();
 
 // POST /api/users gets JSON bodies
 app.post('/api', jsonParser, function (req, res) {
-    // create doc in req.body
-    // res.send(req.params);
-    // console.log(req.body);      // your JSON
-    res.send(req.body);
+
+    let data: Object = req.body;
+    let values: any = [];
+    let result: string = "";
+
+
+    for (const key in data) {
+        values = data[key as keyof typeof data];
+        if (key === "fragments" || values.constructor === Array) {
+
+            values.forEach((element: string) => {
+                result += `fragmentid = "${element} "`;
+
+            });
+
+        } else { result = "No values found!" }
+
+    }
+    res.send(result);
+    // res.send(req.body);
 
 })
 
-// let id = 3;
-// let tpl:string="";
-// let frg = fragment_lib[0].doc.document;
-// id > template_lib.length || id < 0 ? tpl = "To large or to small" : tpl = "ok!";
+
+app.post('/item/:pageid', jsonParser, function (req, res) {
+
+    let result: string = "";
+
+
+    if (Object.entries(req.body).length != 0 && req.body.constructor === Object) {
+
+        let data: Object = req.body;
+        let values: any = [];
+        let pageid: number = Number(req.params.pageid);
+        // Get page template
+        let tpl: any = check_array(Number(pageid), template_lib).doc.document;
+
+
+        for (const key in data) {
+            values = data[key as keyof typeof data];
+            if (key === "fragments" && values.constructor === Array) {
+
+                let children:any = [];
+
+                values.forEach((element: string) => {
+
+                    let fragmentid: number = Number(element);
+                    let frg: any = check_array(Number(fragmentid), fragment_lib).doc.document;
+
+                    if (frg.name === frg.parent) {console.log(frg.children); }
+                    children.push(frg);
+
+                    // let hde: any = check_array(0, fragment_lib).doc.document;
+
+                    tpl.children.forEach((element: any) => {
+                        if (element.name === frg.parent) {
+                            element.children = children;
+                        }
+                    });
+                });
+
+                let p: markup_document = {
+                    name: tpl.name,
+                    attributes: tpl.attributes,
+                    doctype: tpl.doctype,
+                    children: tpl.children
+                }
+
+                result = new createDocument(p).el;
+
+
+
+            } else { result = "No fragments found!" }
+
+        }
+
+    } else { result = "No body found!" }
+    res.send(result);
+
+})
 
 app.listen(PORT, () => {
     console.log(`Server started at ${config.host}:${config.port}`);
-    // console.log(frg);
 });
 
 

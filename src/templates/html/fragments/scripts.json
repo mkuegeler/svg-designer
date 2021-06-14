@@ -1,7 +1,7 @@
 {
     "document": {
-        "name": "scripts",
-        "attributes": {"parent": "body"},
+        "name": "span",
+        "parent": "body",
         "children": [
             {
                 "name": "script",
