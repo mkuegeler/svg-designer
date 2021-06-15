@@ -1,0 +1,21 @@
+{
+    "document": {
+        "name": "span",
+        "parent": "head",
+        "children": [
+            {
+                "name": "meta",
+                "attributes": {
+                    "charset": "UTF-8"
+                }
+            },
+            {
+                "name": "meta",
+                "attributes": {
+                    "name": "viewport",
+                    "content": "width=device-width, initial-scale=1.0"
+                }
+            }
+        ]
+    }
+}

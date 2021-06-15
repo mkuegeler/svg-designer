@@ -28,11 +28,11 @@ export class MarkupElement implements markup_element {
     public el: string;
     public children?: string;
     public closed?: boolean
-    constructor(name: string = 'xml', attributes: object = {}, children?: string, closed?: boolean) {
+    constructor(name: string = 'void', attributes: object = {}, children?: string, closed?: boolean) {
         this.name = name;
         this.attributes = attributes;
-        this.children = children;
-        this.closed = closed;
+        children? this.children = children : undefined;
+        closed? this.closed = closed : false;
 
         let attrString: string = '';
         // Check if attributes exist

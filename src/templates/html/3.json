@@ -12,8 +12,9 @@
             {
                 "name": "body",
                 "children": [
-                    {
-                        "name": "div"
+                    { 
+                        "name": "span",
+                        "text": "<!--  Placeholder -->"
                     }
                 ]
             }

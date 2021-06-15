@@ -1,5 +1,6 @@
 import express from 'express';
 import { Request, Response } from 'express';
+import { exit } from 'process';
 import config from './config.json';
 import { markup_document, viewDocument, createDocument } from './markup-generator';
 import { template_lib } from './templates/lib';
@@ -148,29 +149,62 @@ app.post('/item/:pageid', jsonParser, function (req, res) {
         // Get page template
         let tpl: any = check_array(Number(pageid), template_lib).doc.document;
 
+        // console.log(tpl);
 
         for (const key in data) {
             values = data[key as keyof typeof data];
             if (key === "fragments" && values.constructor === Array) {
 
-                let children:any = [];
+                let children: any = [];
+                let frg: any ={};
+                let parent:any = {};
+                
 
                 values.forEach((element: string) => {
+                    // let fragmentid: number = Number(element);
+                    frg = check_array(Number(element), fragment_lib).doc.document;
+                    parent = tpl.children.filter((p: { name: string; }) => p.name === frg.parent);
+                    // parent.children = [...frg];
+                    // frg.name === frg.parent ? children.push(...frg.children) : children.push(frg);
+                    // parent.children.push(frg);
+                    // if (parent.children) { console.log(parent.children); children.push(parent.children); }
+                    parent.push(frg);
+                    console.log(parent);
 
-                    let fragmentid: number = Number(element);
-                    let frg: any = check_array(Number(fragmentid), fragment_lib).doc.document;
-
-                    if (frg.name === frg.parent) {console.log(frg.children); }
-                    children.push(frg);
-
-                    // let hde: any = check_array(0, fragment_lib).doc.document;
-
-                    tpl.children.forEach((element: any) => {
-                        if (element.name === frg.parent) {
-                            element.children = children;
-                        }
-                    });
                 });
+
+                // console.log(children);
+
+
+                // console.log(children);
+                // let n:number = 0; 
+                // children.forEach((child: any) => {
+                //   console.log(child);
+                    
+                //     // console.log(`Fragment children: ${child.children[0].name} - Parent of Fragment: ${child.parent}`);
+                //     let c:any= child.children; let p:string = child.parent;
+                //     // tpl.children.filter((x: { name: string; }) => x.name === p).children = [...c];
+
+                //     let parent = tpl.children.filter((x: { name: string; }) => x.name === p);
+                //     parent.children = [...c];
+                //     console.log(parent);
+                    
+                    
+                //     // console.log(parent.children);
+                //     // tpl.children.forEach((element: any) => {
+                //     //     // console.log(`Parent: ${element.name} - Fragment: ${child.name} - Parent of Fragment: ${child.parent}`);
+                //     //     // element.children = element.name === child.parent ? child.children.children : child.children;
+                //     //     if (element.name === p) {
+                //     //         // console.log(`Element: ${element.name} - Child: ${child}`);
+                //     //         element.children = [...c];
+                //     //     }
+                //     // });
+                //     // console.log(`------------ Element: ${n} -----------`);
+                //     //        console.log(tpl.children);
+                //     // n++; 
+                // });
+
+                // console.log(tpl.children);
 
                 let p: markup_document = {
                     name: tpl.name,
