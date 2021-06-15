@@ -148,63 +148,17 @@ app.post('/item/:pageid', jsonParser, function (req, res) {
         let pageid: number = Number(req.params.pageid);
         // Get page template
         let tpl: any = check_array(Number(pageid), template_lib).doc.document;
-
-        // console.log(tpl);
-
         for (const key in data) {
             values = data[key as keyof typeof data];
             if (key === "fragments" && values.constructor === Array) {
 
-                let children: any = [];
-                let frg: any ={};
-                let parent:any = {};
-                
+                values.forEach((fragmentId: string) => {
+                    let fragment = check_array(Number(fragmentId), fragment_lib).doc.document;
+                    let [parent] = tpl.children.filter((parentFilter: { name: string; }) => parentFilter.name === fragment.parent);
 
-                values.forEach((element: string) => {
-                    // let fragmentid: number = Number(element);
-                    frg = check_array(Number(element), fragment_lib).doc.document;
-                    parent = tpl.children.filter((p: { name: string; }) => p.name === frg.parent);
-                    // parent.children = [...frg];
-                    // frg.name === frg.parent ? children.push(...frg.children) : children.push(frg);
-                    // parent.children.push(frg);
-                    // if (parent.children) { console.log(parent.children); children.push(parent.children); }
-                    parent.push(frg);
-                    console.log(parent);
-
+                    // fragment.name === fragment.parent ? fragment = fragment.children : fragment;
+                    parent.children ? parent.children.push(fragment) : parent.children = [fragment];
                 });
-
-                // console.log(children);
-
-
-                // console.log(children);
-                // let n:number = 0; 
-                // children.forEach((child: any) => {
-                //   console.log(child);
-                    
-                //     // console.log(`Fragment children: ${child.children[0].name} - Parent of Fragment: ${child.parent}`);
-                //     let c:any= child.children; let p:string = child.parent;
-                //     // tpl.children.filter((x: { name: string; }) => x.name === p).children = [...c];
-
-                //     let parent = tpl.children.filter((x: { name: string; }) => x.name === p);
-                //     parent.children = [...c];
-                //     console.log(parent);
-                    
-                    
-                //     // console.log(parent.children);
-                //     // tpl.children.forEach((element: any) => {
-                //     //     // console.log(`Parent: ${element.name} - Fragment: ${child.name} - Parent of Fragment: ${child.parent}`);
-                //     //     // element.children = element.name === child.parent ? child.children.children : child.children;
-                //     //     if (element.name === p) {
-                //     //         // console.log(`Element: ${element.name} - Child: ${child}`);
-                //     //         element.children = [...c];
-                //     //     }
-                //     // });
-                //     // console.log(`------------ Element: ${n} -----------`);
-                //     //        console.log(tpl.children);
-                //     // n++; 
-                // });
-
-                // console.log(tpl.children);
 
                 let p: markup_document = {
                     name: tpl.name,
@@ -214,8 +168,6 @@ app.post('/item/:pageid', jsonParser, function (req, res) {
                 }
 
                 result = new createDocument(p).el;
-
-
 
             } else { result = "No fragments found!" }
 
