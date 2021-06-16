@@ -6,7 +6,7 @@ import html1 from './html/1.json';
 import header from './html/fragments/header.json';
 import script from './html/fragments/script.json';
 import meta from './html/fragments/meta.json';
-// import link from './html/fragments/link.json';
+import link from './html/fragments/link.json';
 
 export interface templates {
     name: string,
@@ -20,7 +20,8 @@ export const template_lib: templates[] = [
 ]
 
 export const fragment_lib: templates[] = [
-    { name: "meta", type: "html", doc: meta },
-    { name: "header", type: "html", doc: header },
-    { name: "script", type: "html", doc: script }
+    { name: "meta", type: "html", doc: meta },     // 0
+    { name: "header", type: "html", doc: header }, // 1
+    { name: "script", type: "html", doc: script }, // 2
+    { name: "link", type: "html", doc: link }      // 3
 ]
