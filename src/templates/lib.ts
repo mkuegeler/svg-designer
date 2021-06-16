@@ -1,12 +1,12 @@
+// Templates
 import html0 from './html/0.json';
 import html1 from './html/1.json';
-import html2 from './html/2.json';
-import html3 from './html/3.json';
 
 // Fragments
 import header from './html/fragments/header.json';
-import scripts from './html/fragments/scripts.json';
+import script from './html/fragments/script.json';
 import meta from './html/fragments/meta.json';
+// import link from './html/fragments/link.json';
 
 export interface templates {
     name: string,
@@ -16,14 +16,11 @@ export interface templates {
 
 export const template_lib: templates[] = [
     { name: "html0", type: "html", doc: html0 },
-    { name: "html1", type: "html", doc: html1 },
-    { name: "html2", type: "html", doc: html2 },
-    { name: "html3", type: "html", doc: html3 }
+    { name: "html1", type: "html", doc: html1 }
 ]
 
 export const fragment_lib: templates[] = [
     { name: "meta", type: "html", doc: meta },
     { name: "header", type: "html", doc: header },
-    { name: "scripts", type: "html", doc: scripts }
-    
+    { name: "script", type: "html", doc: script }
 ]

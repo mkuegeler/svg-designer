@@ -2,50 +2,44 @@ import { MarkupElement } from './markup';
 import { template_lib } from './templates/lib';
 import config from './config.json';
 
-const tpl = template_lib[config.default].doc;
-
-export interface child {
-    name: string,
-    attributes?: object,
-    children?: child[],
-    text?: string | string[]
-}
+const [tpl] = template_lib[config.default].doc;
 
 export interface markup_document {
     name: string;
     attributes?: object;
     doctype?: boolean;
-    children?: child[];
-
+    children?: markup_document[];
+    text?: string | string[]
 }
 
 export const defaultDoc: markup_document = {
-    name: tpl.document.name,
-    attributes: tpl.document.attributes,
-    doctype: tpl.document.doctype,
-    children: tpl.document.children
+    name: tpl.name,
+    attributes: tpl.attributes,
+    doctype: tpl.doctype,
+    children: tpl.children
 }
+
 
 export class MarkupDocument implements markup_document {
     public name: string;
     public attributes?: object;
     public doctype?: boolean;
-    public children?: child[];
+    public children?: markup_document[];
     public el: string;
     constructor(name: string = defaultDoc.name,
         attributes?: object, doctype?: boolean,
-        children?: child[]) {
+        children?: markup_document[]) {
 
         this.name = name;
         attributes ? this.attributes = attributes : {};
         doctype ? this.doctype = true : this.doctype = false;
-        children? this.children = children : this.children = [];
+        children ? this.children = children : this.children = [];
 
-        let doc:string = new MarkupElement(name, attributes, this.get_children(this.children),true).el;
+        let doc: string = new MarkupElement(name, attributes, this.get_children(this.children), true).el;
         this.doctype === true ? this.el = `<!doctype ${name}>${doc}` : this.el = `${doc}`;
 
     }
-    private get_children(children: child[]) {
+    private get_children(children: markup_document[]) {
         let content: string = "";
         let txt: string = "";
         children.forEach(child => {
@@ -70,19 +64,18 @@ export class viewDocument {
 
         this.id = id;
         let tpl: any;
-        this.id >= template_lib.length || this.id < 0 ? tpl = template_lib[0].doc : tpl = template_lib[this.id].doc;
+        this.id >= template_lib.length || this.id < 0 ? [tpl] = template_lib[0].doc : [tpl] = template_lib[this.id].doc;
 
-        let doctype: boolean = tpl.document.doctype ? tpl.document.doctype : false;
+        let doctype: boolean = tpl.doctype ? tpl.doctype : false;
 
         let params: markup_document = {
-            name: tpl.document.name,
-            attributes: tpl.document.attributes,
+            name: tpl.name,
+            attributes: tpl.attributes,
             doctype: doctype,
-            children: tpl.document.children
+            children: tpl.children
         }
 
-        this.el = new MarkupDocument(params.name,
-            params.attributes, params.doctype, params.children).el;
+        this.el = new createDocument(params).el;
     }
 }
 

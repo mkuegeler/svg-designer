@@ -1,15 +1,18 @@
-{
-    "document": {
+[
+    {
         "name": "table",
         "attributes": {
             "class": "table table-dark table-striped"
         },
         "children": [
-            {"name":"thead",
+            {
+                "name": "thead",
                 "children": [
-                    {"name":"th"}
+                    {
+                        "name": "th"
+                    }
                 ]
             }
         ]
     }
-}
+]

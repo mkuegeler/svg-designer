@@ -1,5 +1,5 @@
-{
-    "document": {
+[
+    {
         "name": "header",
         "parent": "body",
         "children": [
@@ -53,4 +53,4 @@
             }
         ]
     }
-}
+]

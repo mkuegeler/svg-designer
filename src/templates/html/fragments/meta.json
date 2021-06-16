@@ -1,21 +1,17 @@
-{
-    "document": {
-        "name": "span",
+[
+    {
+        "name": "meta",
         "parent": "head",
-        "children": [
-            {
-                "name": "meta",
-                "attributes": {
-                    "charset": "UTF-8"
-                }
-            },
-            {
-                "name": "meta",
-                "attributes": {
-                    "name": "viewport",
-                    "content": "width=device-width, initial-scale=1.0"
-                }
-            }
-        ]
+        "attributes": {
+            "charset": "UTF-8"
+        }
+    },
+    {
+        "name": "meta",
+        "parent": "head",
+        "attributes": {
+            "name": "viewport",
+            "content": "width=device-width, initial-scale=1.0"
+        }
     }
-}
+]
