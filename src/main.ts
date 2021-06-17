@@ -110,17 +110,6 @@ app.post('/demo', jsonParser, function (req, res) {
             } else { result = "No fragments element in body found!" }
         }
 
-
-        // let fragment: any = check_array(Number(fragmentId), fragment_lib).doc;
-        // let [parent] = tpl.children.filter((parentFilter: { name: string; }) => parentFilter.name === fragment[0].parent);
-        // parent.children = [];
-        // fragment.forEach((frg: any) => {
-        //     parent.children.push(frg);
-        // });
-
-
-
-
     } else { result = "No body found!" }
     res.send(result);
 
