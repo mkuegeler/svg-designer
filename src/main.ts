@@ -79,13 +79,23 @@ app.post('/demo', jsonParser, function (req, res) {
         let pageid: number = 0;
         let [tpl]: any = check_array(Number(pageid), template_lib).doc;
 
+        let parentChecker: string = "";
+        let parentHistory: string[] = [];
+
         for (const key in data) {
             values = data[key as keyof typeof data];
             if (key === "fragments" && values.constructor === Array) {
                 values.forEach((fragmentId: string) => {
                     let fragment: any = check_array(Number(fragmentId), fragment_lib).doc;
                     let [parent] = tpl.children.filter((parentFilter: { name: string; }) => parentFilter.name === fragment[0].parent);
-                    parent.children = [];
+
+                    if (![parentChecker, parentHistory.find(x => x === fragment[0].parent)].includes(fragment[0].parent)) {
+                        parent.children = [];
+                    }
+
+                    parentChecker = fragment[0].parent;
+                    parentHistory.push(parentChecker);
+
                     fragment.forEach((frg: any) => {
                         parent.children.push(frg);
                     });
